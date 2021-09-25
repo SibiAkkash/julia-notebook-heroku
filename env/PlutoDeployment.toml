@@ -1,7 +1,7 @@
 [Export]
 baked_state = false
 offer_binder = true
-slider_server_url="https://computationalthinking-sliderserver-droplet.plutojl.org"
+slider_server_url="https://pluto-slider-heroku.herokuapp.com/"
 ignore_cache = [
     "index.jl",
 ]
