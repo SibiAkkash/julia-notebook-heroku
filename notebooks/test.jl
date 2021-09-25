@@ -51,8 +51,17 @@ JuliaImages hosts the major Julia packages for image processing. Julia is well-s
 
 """
 
+# ╔═╡ a2be8461-5b8f-4e96-b3e9-1fb1f97414a2
+base_path = "https://raw.githubusercontent.com/SibiAkkash/Image-Processing-in-Julia/main/images"
+
+# ╔═╡ 98c6dc90-0323-44c5-af1f-1137d309ac42
+function download_img(url, resize_factor=1.0)
+	img = download("$base_path/$url")
+	return imresize(load(img), ratio=resize_factor)
+end
+
 # ╔═╡ 5e450d7a-9704-4371-831c-83a82a8fc1fb
-imresize(load("images/julia.png"), ratio=0.1)
+download_img("julia.png", 0.15)
 
 # ╔═╡ 126ed5e7-d15e-409e-929d-c68a87900be2
 md"""
@@ -191,7 +200,7 @@ md"""
 """
 
 # ╔═╡ 77f0d940-acd1-4a6b-b5cc-9477342ea4ba
-load("images/log_transform.png")
+download_img("log_transform.png")
 
 # ╔═╡ 29d364af-d96e-450b-97b1-bcc5a312b30b
 md"""
@@ -239,9 +248,6 @@ threshold_img(pixel, thres) = pixel < thres ? Gray(0) : Gray(1);
 # ╔═╡ 303b4db3-3485-4273-85e0-7ca180f0a489
 [cameraman threshold_img.(cameraman, threshold_level)]
 
-# ╔═╡ 4c885c4f-8f45-40ef-bab6-7e933653440b
-# [cameraman threshold_img.(cameraman, 0.5) threshold_img.(cameraman, 0.1)]
-
 # ╔═╡ 36288155-8162-48ba-bafc-c671111ef685
 md"""
 _Original image, threshold = $0.5$, threshold = $0.1$ (left to right)_
@@ -255,7 +261,7 @@ Each pixel in an image has a bit-depth(the number of bits used to store the inte
 """
 
 # ╔═╡ 585a6a44-ea90-42aa-ad12-bd0857986051
-imresize(load("images/bit-plane-slicing.png"), ratio=0.8)
+download_img("bit-plane-slicing.png", 0.8)
 
 # ╔═╡ 858a0016-1868-4244-9b39-c9eee8e8528b
 md"""
@@ -294,30 +300,6 @@ Bit plane number
 # ╔═╡ c60781b0-d77e-461d-a8c8-8a9e6f8b01ea
 [airplane bit_plane_transform.(airplane, bit_plane_number)]
 
-# ╔═╡ a700b387-3896-467e-ae2a-c641ba6b6e82
-# [airplane bit_planes[8] bit_planes[7]]
-
-# ╔═╡ cd2883a5-66c5-4984-ab67-9e67d9123f0a
-md"""
-_Original image, $8^{th}$ bit-plane, $7^{th}$ bit-plane (left to right)._
-"""
-
-# ╔═╡ 315711f4-a941-4803-b1aa-82f8bba8742a
-# [bit_planes[6] bit_planes[5] bit_planes[4]]
-
-# ╔═╡ dbd06f30-fc23-4350-ac04-217957953a47
-md"""
-_$6^{th}$ bit-plane, $5^{th}$ bit-plane, $4^{th}$ bit-plane (left to right)._
-"""
-
-# ╔═╡ ac9d1af6-fc97-4a3a-a35f-0741056e35b7
-# [bit_planes[3] bit_planes[2] bit_planes[1]]
-
-# ╔═╡ a4468550-d09a-4e02-98eb-25d6a0bfec3f
-md"""
-_$3^{rd}$ bit-plane, $2^{nd}$ bit-plane, $1^{st}$ bit-plane (left to right)._
-"""
-
 # ╔═╡ 3d14bd45-68cc-4a68-9316-da6479a04ec8
 md"""
 ---
@@ -350,7 +332,7 @@ end;
 
 # ╔═╡ e3fe9f4c-b29f-4c31-aa09-af86a334a5f9
 let
-	noisy_img = load("images/hip-pepper.jpg")
+	noisy_img = download_img("hip-pepper.jpg")
 	denoised = max_neighbour_filtering(noisy_img, 3)
 	[noisy_img denoised]
 end
@@ -384,7 +366,7 @@ end;
 
 # ╔═╡ fe88767b-a729-4d45-8a54-69626e7905cc
 begin
-	noisy_img = load("images/Noise_salt_and_pepper.png")
+	noisy_img = download_img("Noise_salt_and_pepper.png")
 	denoised = median_neighborhood_filtering(noisy_img, 3)
 	[noisy_img denoised]
 end
@@ -417,8 +399,8 @@ This subtraction operation could result in negative values. _In Julia, negative 
 
 # ╔═╡ fd263a3c-4564-4277-b1a7-c513037788d1
 let
-	original = load("images/collenchyma.jpg")
-	reference = load("images/reference.jpg")
+	original = download_img("collenchyma.jpg")
+	reference = download_img("reference.jpg")
 	temp = copy(original)
 	# add a constant to avoid negative values
 	temp = Gray(109/255) .+ original
@@ -442,7 +424,7 @@ The output looks like a binocular image of an airplane.
 # ╔═╡ 33afa793-3ff9-4964-8dad-55defac879ed
 let
 	airplane = testimage("airplane")
-	radialgradient = load("images/radialgradient.png")
+	radialgradient = download_img("radialgradient.png")
 	# hadarmard product -> elementwise product
 	temp = airplane .⊙ radialgradient
 	[airplane radialgradient temp]
@@ -465,8 +447,8 @@ md"""
 
 # ╔═╡ 2329ab22-ff21-4dae-9145-aabe0bca97c0
 begin
-	cars = imresize(load("images/cars.jpg"), ratio=0.6)
-	circle_mask = imresize(load("images/circle-mask.jpg"), ratio=0.6)
+	cars = imresize(download_img("cars.jpg"), ratio=0.6)
+	circle_mask = imresize(download_img("circle-mask.jpg"), ratio=0.6)
 end;
 
 # ╔═╡ 1fd2b39e-ed9a-43c0-9793-896b0515545e
@@ -590,6 +572,8 @@ md"""
 
 # ╔═╡ Cell order:
 # ╟─b3c895eb-552f-4a2f-a46c-5588ceb36928
+# ╟─98c6dc90-0323-44c5-af1f-1137d309ac42
+# ╟─a2be8461-5b8f-4e96-b3e9-1fb1f97414a2
 # ╟─5e450d7a-9704-4371-831c-83a82a8fc1fb
 # ╟─126ed5e7-d15e-409e-929d-c68a87900be2
 # ╠═51d657ba-3305-4fa6-93d0-fe75252621b8
@@ -621,7 +605,6 @@ md"""
 # ╠═b2ff30c7-8371-43a0-b1da-66d75cdf39b2
 # ╠═fdc6f5e8-9eff-4ceb-9251-e0e70561d048
 # ╠═303b4db3-3485-4273-85e0-7ca180f0a489
-# ╠═4c885c4f-8f45-40ef-bab6-7e933653440b
 # ╟─36288155-8162-48ba-bafc-c671111ef685
 # ╟─0b161b67-68c0-4057-94e8-a3d3cf251149
 # ╟─585a6a44-ea90-42aa-ad12-bd0857986051
@@ -631,12 +614,6 @@ md"""
 # ╟─d9a532c4-d5f3-455c-a857-f7d8e9afb630
 # ╠═b4a2def8-c6c6-4a03-8742-7df7d931d4cc
 # ╠═c60781b0-d77e-461d-a8c8-8a9e6f8b01ea
-# ╠═a700b387-3896-467e-ae2a-c641ba6b6e82
-# ╟─cd2883a5-66c5-4984-ab67-9e67d9123f0a
-# ╠═315711f4-a941-4803-b1aa-82f8bba8742a
-# ╟─dbd06f30-fc23-4350-ac04-217957953a47
-# ╠═ac9d1af6-fc97-4a3a-a35f-0741056e35b7
-# ╟─a4468550-d09a-4e02-98eb-25d6a0bfec3f
 # ╟─3d14bd45-68cc-4a68-9316-da6479a04ec8
 # ╟─298c6fd5-730b-4358-9fe8-b9501fd37826
 # ╠═1f88e842-449f-453b-92bc-c7879e227236
