@@ -32,11 +32,16 @@ jobs:
 
             - name: Run & export Pluto notebooks
               run: julia --project=env -e '
-                  import Pkg;
-                  Pkg.instantiate();
+                  Pkg.activate(mktempdir());
+                  Pkg.add([
+                    Pkg.PackageSpec(name="PlutoSliderServer", version="0.2.1-0.2"),
+                  ]);
 
-                  using PlutoSliderServer;
-                  github_action("."; Export_cache_dir="pluto_state_cache");'
+                  import PlutoSliderServer;
+
+                  PlutoSliderServer.github_action(;
+                    Export_cache_dir="pluto_state_cache",
+                  );'
 
 
             - name: Deploy to gh-pages
