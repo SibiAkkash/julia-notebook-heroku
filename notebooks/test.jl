@@ -15,24 +15,6 @@ end
 
 # ╔═╡ 51d657ba-3305-4fa6-93d0-fe75252621b8
 begin
-	import Pkg
-	Pkg.activate(mktempdir())
-	Pkg.add([
-		"ColorVectorSpace",
-		"CoordinateTransformations",
-		"Images",
-		"ImageMorphology",
-		"ImageIO", 
-		"Interpolations",
-		"FileIO",  
-		"PlutoUI", 
-		"PNGFiles",
-		"HypertextLiteral",
-		"TestImages",
-		"Statistics",
-		"PaddedViews",
-		"ImageFiltering"
-	])
 	using Images, ImageMorphology, ColorVectorSpace, PaddedViews, TestImages, FileIO
 	using PlutoUI, HypertextLiteral
 	using Statistics
