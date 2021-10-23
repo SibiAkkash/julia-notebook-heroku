@@ -17,6 +17,7 @@ end
 begin
 	import Pkg
 	Pkg.activate("../env")
+	Pkg.instantiate()
 	# Pkg.add([
 	# 	"ColorVectorSpace",
 	# 	"CoordinateTransformations",
