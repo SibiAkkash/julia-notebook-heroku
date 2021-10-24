@@ -29,19 +29,19 @@ jobs:
                   restore-keys: |
                       ${{ runner.os }}-pluto_state_cache-v2-${{ hashFiles('**/Project.toml', '**/Manifest.toml', '.github/workflows/*' ) }}
 
+            #? Not using a slider server as of now, this might reduce gh actions running time 
+            # - name: Run & export Pluto notebooks
+            #   run: julia -e 'using Pkg;
+            #       Pkg.activate(mktempdir());
+            #       Pkg.add([
+            #         Pkg.PackageSpec(name="PlutoSliderServer", version="0.2.1-0.2"),
+            #       ]);
 
-            - name: Run & export Pluto notebooks
-              run: julia -e 'using Pkg;
-                  Pkg.activate(mktempdir());
-                  Pkg.add([
-                    Pkg.PackageSpec(name="PlutoSliderServer", version="0.2.1-0.2"),
-                  ]);
+            #       import PlutoSliderServer;
 
-                  import PlutoSliderServer;
-
-                  PlutoSliderServer.github_action(;
-                    Export_cache_dir="pluto_state_cache",
-                  );'
+            #       PlutoSliderServer.github_action(;
+            #         Export_cache_dir="pluto_state_cache",
+            #       );'
 
 
             - name: Deploy to gh-pages
