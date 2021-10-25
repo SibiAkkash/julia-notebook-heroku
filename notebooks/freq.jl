@@ -7,7 +7,7 @@ using InteractiveUtils
 # ╔═╡ 252867c0-3495-11ec-0b19-b7c74b40fb64
 begin
 	import Pkg
-	Pkg.activate("/media/sibi/DATA/dev/heroku-test/env")
+	Pkg.activate("../env")
 	Pkg.instantiate()
 	
 	using Images, ImageMorphology, ColorVectorSpace, PaddedViews, TestImages, FileIO
@@ -70,7 +70,7 @@ Set all frequencies above cut-off frequency to 0
 """
 
 # ╔═╡ 3ecc5344-f89e-42bd-b4be-9907ac5dd72c
-load("../low-pass.png")
+load("../assets/low-pass.png")
 
 # ╔═╡ f39d58be-609f-46fc-ae75-abae656fb5e9
 let
@@ -106,7 +106,7 @@ Set all frequencies below cut-off frequency to 0
 """
 
 # ╔═╡ e95631d8-92f7-4a90-8e0c-a8c47ad0524f
-load("../high-pass.png")
+load("../assets/high-pass.png")
 
 # ╔═╡ ccb72855-e76e-4c80-beb6-a5af27c2b0ea
 let
@@ -179,7 +179,7 @@ end
 # ╠═b9111235-2396-40ba-a108-4293c11cfa2b
 # ╟─b3165a79-b771-4f74-b829-419dbe6d0ba7
 # ╟─13f1e62e-238d-4b99-9418-33fceaeb6ffb
-# ╟─3ecc5344-f89e-42bd-b4be-9907ac5dd72c
+# ╠═3ecc5344-f89e-42bd-b4be-9907ac5dd72c
 # ╠═f39d58be-609f-46fc-ae75-abae656fb5e9
 # ╟─cabcd05a-f011-4fa9-89f2-580284129822
 # ╠═21691ffe-5bdf-484e-af3c-0de673d42832
