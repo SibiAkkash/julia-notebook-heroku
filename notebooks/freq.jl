@@ -12,7 +12,7 @@ begin
 	
 	using Images, ImageMorphology, ColorVectorSpace, PaddedViews, TestImages, FileIO
 	using PlutoUI, HypertextLiteral
-	using Statistics, Plots, FFTW, Hadamard, PyPlot
+	using Statistics, Plots, FFTW, Hadamard
 	using Interpolations, CoordinateTransformations
 end
 
